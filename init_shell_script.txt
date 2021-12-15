@@ -1,0 +1,57 @@
+from pybo.models import Question, Answer
+from django.utils import timezone
+
+<장고 쉘로 질문과 답변 생성>
+
+# 1번 질문 생성
+q = Question(subject = 'pybo가 무엇인가요?', content = 'pybo에 대해서 알고 싶습니다.', create_date = timezone.now())
+q.save() # INSERT 실행
+
+# 2번 질문 생성
+q = Question(subject='장고 모델 질문입니다.', content='id는 자동으로 생성되나요?', create_date=timezone.now())
+q.save() # INSERT 실행
+
+# 모든 질문 데이터 조회
+Question.objects.all()
+
+# id 값이 1인 데이터 조회 (filter) = 다건 조회
+Question.objects.filter(id=1)
+
+# id 값이 1인 데이터만 조회 (get) = 한건 조회
+Question.objects.get(id=1)
+
+# subject에 '장고'라는 문자열이 포함된 데이터만 조회
+Question.objects.filter(subject__contains = '장고')
+
+# 2번 질문의 제목을 수정
+q = Question.objects.get(id = 2)
+q.subject = 'Django Model Question'
+q.save() # UPDATE 실행
+
+# 1번 질문을 삭제
+q = Question.objects.get(id = 1)
+q.delete() # DELETE 실행
+
+# 2번 질문에 대한 답변을 생성
+q = Question.objects.get(id = 2)
+a = Answer(question = q, content = "네 자동으로 됩니다.", create_date = timezone.now())
+a.save()
+
+# id가 1인 답변을 조회
+a = Answer.objects.get(id=1)
+a
+
+# id가 1인 답변에 연결된 질문을 조회
+a.question
+
+# 반대로, 질문을 이용하여 답변을 찾는거는 가능한가? (연결모델명_set 이용)
+q.answer_set.all()
+
+상식적으로 질문 하나에는 여러개의 답변 가능
+q.answer_set
+
+답변 하나에는 여러 개의 질문 불가능
+a.question_set 불가능, a.question 가능
+----------------------------------------------------------------
+<a href 태그>
+<a href="이동할 링크 주소">화면에 띄워질 말</a>
