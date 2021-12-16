@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from pybo.models import Question, Answer
+from .forms import QuestionForm
 
 
 def index(request): # 자바에서 rq와 같은 것
@@ -30,3 +31,11 @@ def answer_create(request, question_id):
     answer = Answer(question=question, content=request.POST.get('content'), create_date=timezone.now())
     answer.save()
     return redirect('pybo:detail', question_id=question.id)
+
+
+def question_create(request):
+    """
+    pybo 질문등록
+    """
+    form = QuestionForm()
+    return render(request, 'pybo/question_form.html', {'form':form})

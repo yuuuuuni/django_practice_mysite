@@ -1,5 +1,6 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<!-- 기본 틀이 되는 base.html을 상속하여 question_list에 적용해줌-->
+{% extends 'base.html' %}
+{% block content %}
 
 <div class="container my-3">
     <table class="table">
@@ -29,5 +30,8 @@
         </tbody>
 
     </table>
+    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">질문 등록하기</a>
 
 </div>
+
+{% endblock %}

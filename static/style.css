@@ -10,11 +10,3 @@ html > body {
     text-underline-position:under; /*밑줄이 살짝 내려감*/
 }
 
-
-textarea {
-    width:100%
-}
-
-input[type=submit] {
-    margin-top:10px;
-}

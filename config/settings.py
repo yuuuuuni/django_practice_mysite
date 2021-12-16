@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mysite', # DB명
-        'USER': 'sbsst', # DBMS 접속 아이디 (SQLyog의 사용자이름이랑 일치, 집 ID : root)
-        'PASSWORD': 'sbs123414', # # DBMS 접속 비번 (SQLyog의 비밀번호랑 일치, 집 PW : '')
+        'USER': 'root', # DBMS 접속 아이디 (SQLyog의 사용자이름이랑 일치, 집 ID : root)
+        'PASSWORD': '', # # DBMS 접속 비번 (SQLyog의 비밀번호랑 일치, 집 PW : '')
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
