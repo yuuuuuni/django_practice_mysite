@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Question(models.Model):
+class Question(models.Model): # id는 자동으로 매겨지므로 생성 안해도 됨
     subject = models.CharField('제목', max_length=200)
     content = models.TextField('내용')
     create_date = models.DateTimeField('등록날짜')

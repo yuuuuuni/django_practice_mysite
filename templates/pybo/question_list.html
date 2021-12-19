@@ -31,7 +31,9 @@
 
     </table>
     <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">질문 등록하기</a>
-
+    <!-- 위와 같이 링크를 통해 페이지를 요청할 경우에는 무조건 GET 방식이 사용됨
+     말 그대로 사용자에게 질문 등록할 화면을 보여주는 것이기 때문에 GET
+     참고로 만약, 사용자가 값을 적어서 제출한다면 그건 POST 방식임-->
 </div>
 
 {% endblock %}
