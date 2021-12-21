@@ -15,11 +15,36 @@ def index(request): # 자바에서 rq와 같은 것
 
 def detail(request, question_id):
     """
-    내용 출력
+     pybo 내용 출력
     """
     question = get_object_or_404(Question, pk=question_id)
     context = {'question': question}
     return render(request, 'pybo/question_detail.html', context)
+
+
+def answer_create(request, question_id):
+    """
+    pybo 답변등록
+    """
+    question = get_object_or_404(Question, pk=question_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid(): # 폼이 유효하면
+            # 폼을 먼저 임시저장해서 answer에 넣자 => 임시저장 안하고 그냥 저장해버리면 create_date에 값이 없다는 오류 생김(현재QuestionForm에는 답변등록날짜 속성이 없기 때문에! 그래서 먼저 임시저장 후 answer객체를 리턴받아 create_date에 값을 설정 후 save()로 실제 저장해줌)
+            answer = form.save(commit=False)
+            answer.create_date = timezone.now()
+            answer.question = question
+            answer.save()
+            return redirect('pybo:detail', question_id=question.id)
+    else:
+        form = AnswerForm()
+    context = {'question': question, 'form': form}
+    return render(request, 'pybo/question_detail.html', context)
+
+# redirect(URL로 이동할 경로, 넘겨줄 거 있으면 넘겨줄거 쓰기)
+# redirect는 URL로 이동
+# URL 로 이동한다는 건 그 URL과 연결된 views 가 다시 실행될테고
+# views와 연결된 함수의 return값을 보고 render를 할지 다시 redirect 할지 결정할 것
 
 
 
@@ -59,27 +84,4 @@ def question_create(request):
 # request.POST에는 화면에서 사용자가 입력한 내용들이 담겨있음
 
 
-def answer_create(request, question_id):
-    """
-    pybo 답변등록
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    if request.method == "POST":
-        form = AnswerForm(request.POST)
-        if form.is_valid(): # 폼이 유효하면
-            # 폼을 먼저 임시저장해서 answer에 넣자 => 임시저장 안하고 그냥 저장해버리면 create_date에 값이 없다는 오류 생김(현재QuestionForm에는 답변등록날짜 속성이 없기 때문에! 그래서 먼저 임시저장 후 answer객체를 리턴받아 create_date에 값을 설정 후 save()로 실제 저장해줌)
-            answer = form.save(commit=False)
-            answer.create_date = timezone.now()
-            answer.question = question
-            answer.save()
-            return redirect('pybo:detail', question_id=question.id)
-        else:
-            form = AnswerForm()
-        context = {'question': question, 'form': form}
-        return render(request, 'pybo/question_detail.html', context)
-
-# redirect(URL로 이동할 경로, 넘겨줄 거 있으면 넘겨줄거 쓰기)
-# redirect는 URL로 이동
-# URL 로 이동한다는 건 그 URL과 연결된 views 가 다시 실행될테고
-# views와 연결된 함수의 return값을 보고 render를 할지 다시 redirect 할지 결정할 것
 
